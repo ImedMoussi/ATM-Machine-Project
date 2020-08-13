@@ -29,6 +29,7 @@ with cnct:
                     [DateExpiration] DATE NOT NULL,
                     [EtatCarte] BOOLEAN NOT NULL); """)
 
+# TODO: Try-except; pour eviter le problème UNIQUE
 # Remplir la table "Client":
 clt = read_csv("Clients.csv")
 clt.to_sql('Client', cnct, if_exists='append', index=False)
