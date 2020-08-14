@@ -1,32 +1,16 @@
-import numpy as np
-from datetime import datetime
 from __MiniProjet import dab_db
 
 
 class Client:
 
-    def __init__(self, code_client=None, client_name=None, code_agence=None, tel=None, email=None):
+    def __init__(self, code_client, client_name, code_agence, tel, email):
         self.CodeClient = code_client
         self.NomPrenom = client_name
         self.CodeAgence = code_agence
         self.Tel = tel
         self.Email = email
 
-    @staticmethod
-    def generate_client_code():
-        while True:
-            client = str(np.random.randint(1, 99999)).rjust(5, "0")
-            codes = [i[0] for i in dab_db.clients_info()]
-            if client in codes:
-                continue
-            return client
-
-    def ajouter_client(self, nom_prenom, code_agence, tel, email):
-        self.CodeClient = Client.generate_client_code()
-        self.NomPrenom = nom_prenom
-        self.CodeAgence = code_agence
-        self.Tel = tel
-        self.Email = email
+    def ajouter_client(self):
         dab_db.ajouter_client(self.CodeClient, self.NomPrenom, self.CodeAgence, self.Tel, self.Email)
 
     class Compte:
@@ -38,30 +22,31 @@ class Client:
 
         def debiter(self, montant):
             self.Solde -= montant
+            dab_db.withdraw(montant, self.NumCompte)
             return self.Solde
 
         def crediter(self, montant):
             self.Solde += montant
+            dab_db.deposit(montant, self.NumCompte)
             return self.Solde
 
         def consulter_solde(self):
             return self.Solde
 
-        def ajouter_compte(self, code_client):
-            self.NumCompte = str(max(int(i[0]) for i in dab_db.accounts_info()) + 1)
-            self.CodeClient = code_client
-            self.Solde = 0.00
+        def ajouter_compte(self):
+            self.NumCompte = str(max(int(i[0]) for i in dab_db.accounts()) + 1)
+            self.Solde = 0
             dab_db.ajouter_compte(self.NumCompte, self.CodeClient, self.Solde)
 
-        def supprimer_compte(self, code_client):
+        def supprimer_compte(self):
+            dab_db.supprimer_compte(self.NumCompte)
             self.NumCompte = None
             self.Solde = 0.00
-            dab_db.supprimer_compte(code_client)
 
         class Carte:
 
-            def __init__(self, num_compte, code_client, num_carte=None, code_secret=None,
-                         date_expiration=None, etat_carte=None):
+            def __init__(self, num_compte, code_client, num_carte, code_secret,
+                         date_expiration, etat_carte):
                 self.NumCompte = num_compte
                 self.CodeClient = code_client
                 self.NumCarte = num_carte
@@ -69,51 +54,27 @@ class Client:
                 self.DateExpiration = date_expiration
                 self.EtatCarte = etat_carte
 
-            @staticmethod
-            def generate_card_number():
-                lst = list()
-                while True:
-                    for i in range(4):
-                        s = str(np.random.randint(1, 9999)).rjust(4, '0')
-                        lst.append(s)
-                    num = '-'.join(lst)
-                    numero_cartes = [i[2] for i in dab_db.cards_info()]
-                    if num in numero_cartes:
-                        continue
-                    return num
-
-            @staticmethod
-            def generate_secret_code():
-                while True:
-                    code = int(str(np.random.randint(1, 9999)).rjust(4, "0"))
-                    codes = [i[3] for i in dab_db.cards_info()]
-                    if code in codes:
-                        continue
-                    return code
-
-            def ajouter_carte(self, num_compte, code_client):
-                self.NumCompte = num_compte
-                self.CodeClient = code_client
-                self.NumCarte = Client.Compte.Carte.generate_card_number()
-                self.CodeSecret = Client.Compte.Carte.generate_secret_code()
-                self.DateExpiration = datetime.now().date()
-                # TODO: year += 4 yrs, GO TO Try code, maybe I'll create a function do this ...
-                self.EtatCarte = True
+            def ajouter_carte(self):
                 dab_db.ajouter_carte(self.NumCompte, self.CodeClient, self.NumCarte,
                                      self.CodeSecret, self.DateExpiration, self.EtatCarte)
 
-            def blouquer_carte(self):
+            def blouquer_carte(self, num_carte):
+                self.NumCarte = num_carte
                 self.EtatCarte = False
+                dab_db.change_etat(self.EtatCarte, self.NumCarte)
 
-            @staticmethod
-            def supprimer_carte(num_carte):
-                dab_db.supprimer_carte(num_carte)
+            def supprimer_carte(self, num_carte):
+                self.NumCarte = num_carte
+                dab_db.supprimer_carte(self.NumCarte)
 
-            def deblouquer_cart(self):
+            def deblouquer_cart(self, num_carte):
+                self.NumCarte = num_carte
                 self.EtatCarte = True
+                dab_db.change_etat(self.EtatCarte, self.NumCarte)
 
-            def modifier_code_secret(self, code):
+            def modifier_code_secret(self, num_carte,  code):
+                self.NumCarte = num_carte
                 self.CodeSecret = code
-
+                dab_db.change_code(self.CodeSecret, self.NumCarte)
 
 # TODO: the last function ... how it work !!?
