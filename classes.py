@@ -77,4 +77,4 @@ class Client:
                 self.CodeSecret = code
                 dab_db.change_code(self.CodeSecret, self.NumCarte)
 
-# TODO: the last function ... how it work !!?
+# TODO: public and private

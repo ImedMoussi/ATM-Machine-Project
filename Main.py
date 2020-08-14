@@ -23,17 +23,22 @@ def card():
         choix = input("->\tChoisissez l'option: ")
         if choix == "1":  # ----------------------------------------------
             code_client = fct.clnt_code_request()
-            num_compte = db.compte_info(code_client)[0]
-            num_carte = fct.generate_card_number()
-            code_secret = fct.generate_secret_code()
-            date_exp = fct.date_expiration()
-            cart = cls.Client.Compte.Carte(num_compte, code_client, num_carte, code_secret, date_exp, True)
-            cart.ajouter_carte()
-            print(f'\n{" Ajouter une carte " :-^60}\n'
-                  f'\t- Une carte a été ajoutée au compte: -{num_compte}-\n'
-                  f'\t- Numéro de carte: {cart.NumCarte}\n'
-                  f'\t- Code secret: {cart.CodeSecret}\n'
-                  f'{"" :-^60}\n')
+            try:
+                num_compte = db.compte_info(code_client)[0]
+                num_carte = fct.generate_card_number()
+                code_secret = fct.generate_secret_code()
+                date_exp = fct.date_expiration()
+                cart = cls.Client.Compte.Carte(num_compte, code_client, num_carte, code_secret, date_exp, True)
+                cart.ajouter_carte()
+            except:
+                account(code_client)
+            else:
+                print(f'\n{" Ajouter une carte " :-^60}\n'
+                      f'- Une carte a été ajoutée au compte -{num_compte}-:\n'
+                      f'\t- Numéro de carte: {cart.NumCarte}\n'
+                      f'\t- Code secret: {cart.CodeSecret}\n'
+                      f"\t- Date d'expiration: {cart.DateExpiration}\n"
+                      f'{"" :-^60}\n')
             card()
 
         elif choix in ["2", "3", "4", "5"]:
@@ -86,8 +91,7 @@ def card():
                             cart.modifier_code_secret(num_carte, int(new_code))
                             print(f'{" Opération réussie " :-^60}\n')
                             break
-                        break
-                card()
+                        card()
         elif choix == "6":  # ----------------------------------------------
             print(f'\n{"":=^70}')
             start()
@@ -121,7 +125,7 @@ def account(code_client):
                     continue
                 if montant <= cmpt.consulter_solde():
                     cmpt.debiter(montant)
-                    print(f'{"Opération réussie" :-^60}')
+                    print(f'{" Opération réussie " :-^60}')
                 else:
                     print("\tLe montant est supérieur au solde")
                     print(f'{" Opération échouée " :-^60}')
@@ -141,9 +145,9 @@ def account(code_client):
                       f'\tSolde: {solde:.2f} £'
                       f'\n{"" :-^60}')
             elif choix == "4":  # --------------------------------------------------
-                print(f'\n{"" :-^60}\n'
+                print(f'\n{"Supprimer le compte" :-^60}\n'
                       f'\t- Le compte N°: {cmpt.NumCompte} de -{client_name}- a été supprimé.'
-                      f'\n{"" :-^60}')
+                      f'\n{" Opération réussie " :-^60}')
                 cmpt.supprimer_compte()
                 account(code_client)
             elif choix == "5":  # --------------------------------------------------
@@ -160,6 +164,7 @@ def account(code_client):
                 print(f'\n{"" :-^60}\n'
                       f'\t- Le compte N°: {cmpt.NumCompte} a été ajouté au client: -{client_name}-.'
                       f'\n{"" :-^60}')
+                start()
             elif choix == "2":  # --------------------------------------------------
                 print(f'\n{"":=^70}')
                 start()
