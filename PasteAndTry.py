@@ -18,24 +18,3 @@
 #         values = tuple(list(i.values()))
 #         cur.executemany(""" INSERT INTO Carte VALUES (?, ?, ?, ?, ?, ?) """, values)
 
-from __MiniProjet import dab_db
-
-
-def account_info_reqeust():
-    accounts_no = [i[0] for i in dab_db.accounts()]
-    print(accounts_no)
-    while True:
-        account_no = input("->\tDonner le No du compte: ")
-        if account_no not in accounts_no:
-            print("\t-Numéro de compte incorrecte")
-            continue
-        break
-    while True:
-        code = int(input("->\tDonner le code secret: "))
-        if code != dab_db.secret_code(accounts_no):
-            print("\t-Code secret incorrecte")
-            continue
-        break
-    return accounts_no, code
-
-print(account_info_reqeust())
