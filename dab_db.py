@@ -1,7 +1,6 @@
 import sqlite3
 from pandas import read_csv
 
-# cnct = sqlite3.connect(':memory:')
 cnct = sqlite3.connect('DAB_BDD.db')
 cur = cnct.cursor()
 
@@ -92,14 +91,14 @@ def supprimer_compte(num_compte):
         cur.execute("DELETE FROM Carte WHERE NumCompte = ?", (num_compte,))
 
 
-def deposit(num_compte, montant):
-    with cnct:
-        cur.execute("UPDATE Compte SET Solde = Solde + ? WHERE NumCompte = ?", (montant, num_compte))
-
-
-def withdraw(num_compte, montant):
+def retirer(num_compte, montant):
     with cnct:
         cur.execute("UPDATE Compte SET Solde = Solde - ? WHERE NumCompte = ?", (montant, num_compte))
+
+
+def deposer(num_compte, montant):
+    with cnct:
+        cur.execute("UPDATE Compte SET Solde = Solde + ? WHERE NumCompte = ?", (montant, num_compte))
 
 
 def ajouter_carte(num_compte, code_client, num_carte, code_secret, date_exp, etat):

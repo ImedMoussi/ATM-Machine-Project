@@ -65,7 +65,7 @@ def generate_secret_code():
         return code
 
 
-def date_expiration():
+def exp_date():
     year = datetime.now().year + 4
     month = datetime.now().month
     day = datetime.now().day

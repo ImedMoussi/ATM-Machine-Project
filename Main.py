@@ -20,7 +20,7 @@ def card():  # =================================================================
                 num_compte = db.compte_info(code_client)[0]
                 num_carte = fct.generate_card_number()
                 code_secret = fct.generate_secret_code()
-                date_exp = fct.date_expiration()
+                date_exp = fct.exp_date()
 
                 cart = cls.Client.Compte.Carte(num_compte, code_client, num_carte, code_secret, date_exp, True)
                 cart.ajouter_carte()
@@ -274,6 +274,5 @@ if __name__ == '__main__':
     print(f'{" BIENVENUE ":*^80}')
     start()
 
-# TODO: un compte ykon 3ando plz carte ... w kifeh t9asem swared bin lesz cartes ...
-# TODO: lazem n3awed nkhamem comment fonctionne le programme d'une maniere logique
+# TODO: un compte ykon 3ando plz carte ... w kifeh t9asem swared bin les cartes ...
 # sinarko

@@ -22,11 +22,11 @@ class Client:
 
         def debiter(self, montant):
             self.Solde -= montant
-            db.withdraw(self.NumCompte, montant)
+            db.retirer(self.NumCompte, montant)
 
         def crediter(self, montant):
             self.Solde += montant
-            db.deposit(self.NumCompte, montant)
+            db.deposer(self.NumCompte, montant)
 
         def consulter_solde(self):
             return self.Solde
