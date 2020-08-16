@@ -1,6 +1,27 @@
+from __MiniProjet import dab_db as db
 from datetime import datetime
 import numpy as np
-from __MiniProjet import dab_db as db
+
+
+def client_code_request():
+    """This function return a client name before it check the name already exist in my bdd or not"""
+    codes = [i[0] for i in db.clients()]
+    while True:
+        code = input("- Donner le code client: ")
+        if code not in codes:
+            print(f"\t-> Le client -{code}- n'existe pas.\n")
+            continue
+        return code
+
+
+def no_card_request():
+    num_cartes = [i[2] for i in db.cards()]
+    while True:
+        num_carte = input("- Le numéro de carte: ")
+        if num_carte not in num_cartes:
+            print("\t-> Cette carte n'existe pas.\n")
+            continue
+        return num_carte
 
 
 def generate_client_code():
@@ -10,6 +31,16 @@ def generate_client_code():
         if code in codes:
             continue
         return code
+
+
+def generate_account_number():
+    accounts = [int(i[0]) for i in db.accounts()]
+    num_compte = 1
+    while True:
+        if num_compte in accounts:
+            num_compte += 1
+            continue
+        return str(num_compte)
 
 
 def generate_card_number():
@@ -39,24 +70,3 @@ def date_expiration():
     month = datetime.now().month
     day = datetime.now().day
     return datetime(year, month, day).date()
-
-
-def clnt_code_request():
-    """This function return a client name before it check the name already exist in my bdd or not"""
-    codes = [i[0] for i in db.clients()]
-    while True:
-        code = input("-> Donner le code client: ")
-        if code not in codes:
-            print(f"\t- Le client -{code}- n'existe pas.")
-            continue
-        return code
-
-
-def no_card_request():
-    num_cartes = [i[2] for i in db.cards()]
-    while True:
-        num_carte = input("-> Le numéro de carte: ")
-        if num_carte not in num_cartes:
-            print("\t- Cette carte n'existe pas.")
-            continue
-        return num_carte

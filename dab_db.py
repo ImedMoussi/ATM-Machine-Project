@@ -46,33 +46,33 @@ except:
 
 
 def clients():
-    clnt_info = cur.execute("SELECT * from Client")
-    return clnt_info.fetchall()
+    clnts = cur.execute("SELECT * from Client")
+    return clnts.fetchall()
 
 
 def accounts():
-    acc_info = cur.execute("SELECT * FROM Compte")
-    return acc_info.fetchall()
+    accts = cur.execute("SELECT * FROM Compte")
+    return accts.fetchall()
 
 
 def cards():
-    card_info = cur.execute("SELECT * FROM Carte")
-    return card_info.fetchall()
+    carts = cur.execute("SELECT * FROM Carte")
+    return carts.fetchall()
 
 
 def client_info(code_client):
-    clnt = cur.execute("SELECT * FROM Client WHERE CodeClient = ?", (code_client,))
-    return clnt.fetchone()
+    clnt_info = cur.execute("SELECT * FROM Client WHERE CodeClient = ?", (code_client,))
+    return clnt_info.fetchone()
 
 
 def compte_info(code_client):
-    cmpt = cur.execute("SELECT * FROM Compte WHERE CodeClient = ?", (code_client,))
-    return cmpt.fetchone()
+    cmpt_info = cur.execute("SELECT * FROM Compte WHERE CodeClient = ?", (code_client,))
+    return cmpt_info.fetchone()
 
 
 def carte_info(num_carte):
-    cart = cur.execute("SELECT * FROM Carte WHERE NumCarte = ?", (num_carte,))
-    return cart.fetchone()
+    cart_info = cur.execute("SELECT * FROM Carte WHERE NumCarte = ?", (num_carte,))
+    return cart_info.fetchone()
 
 
 def ajouter_client(code_client, nom_prenom, code_agence, tel, email):
@@ -92,14 +92,14 @@ def supprimer_compte(num_compte):
         cur.execute("DELETE FROM Carte WHERE NumCompte = ?", (num_compte,))
 
 
-def deposit(montant, num_compte):
+def deposit(num_compte, montant):
     with cnct:
-        cnct.execute("UPDATE Compte SET Solde = Solde + ? WHERE NumCompte = ?", (montant, num_compte))
+        cur.execute("UPDATE Compte SET Solde = Solde + ? WHERE NumCompte = ?", (montant, num_compte))
 
 
-def withdraw(montant, num_compte):
+def withdraw(num_compte, montant):
     with cnct:
-        cnct.execute("UPDATE Compte SET Solde = Solde - ? WHERE NumCompte = ?", (montant, num_compte))
+        cur.execute("UPDATE Compte SET Solde = Solde - ? WHERE NumCompte = ?", (montant, num_compte))
 
 
 def ajouter_carte(num_compte, code_client, num_carte, code_secret, date_exp, etat):
@@ -115,9 +115,9 @@ def supprimer_carte(num_carte):
 
 def change_etat(etat, num_carte):
     with cnct:
-        cnct.execute("UPDATE Carte SET EtatCarte = ? WHERE NumCarte = ?", (etat, num_carte))
+        cur.execute("UPDATE Carte SET EtatCarte = ? WHERE NumCarte = ?", (etat, num_carte))
 
 
-def change_code(new_code, num_carte):
+def change_code(num_carte, new_code):
     with cnct:
-        cnct.execute("UPDATE Carte SET CodeSecret = ? WHERE NumCarte = ?", (new_code, num_carte))
+        cur.execute("UPDATE Carte SET CodeSecret = ? WHERE NumCarte = ?", (new_code, num_carte))

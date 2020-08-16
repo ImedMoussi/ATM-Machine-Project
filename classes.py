@@ -1,4 +1,4 @@
-from __MiniProjet import dab_db
+from __MiniProjet import dab_db as db
 
 
 class Client:
@@ -11,7 +11,7 @@ class Client:
         self.Email = email
 
     def ajouter_client(self):
-        dab_db.ajouter_client(self.CodeClient, self.NomPrenom, self.CodeAgence, self.Tel, self.Email)
+        db.ajouter_client(self.CodeClient, self.NomPrenom, self.CodeAgence, self.Tel, self.Email)
 
     class Compte:
 
@@ -22,26 +22,23 @@ class Client:
 
         def debiter(self, montant):
             self.Solde -= montant
-            dab_db.withdraw(montant, self.NumCompte)
-            return self.Solde
+            db.withdraw(self.NumCompte, montant)
 
         def crediter(self, montant):
             self.Solde += montant
-            dab_db.deposit(montant, self.NumCompte)
-            return self.Solde
+            db.deposit(self.NumCompte, montant)
 
         def consulter_solde(self):
             return self.Solde
 
-        def ajouter_compte(self):
-            self.NumCompte = str(max(int(i[0]) for i in dab_db.accounts()) + 1)
+        def ajouter_compte(self, num_compte):
+            self.NumCompte = num_compte
             self.Solde = 0
-            dab_db.ajouter_compte(self.NumCompte, self.CodeClient, self.Solde)
+            db.ajouter_compte(self.NumCompte, self.CodeClient, self.Solde)
 
         def supprimer_compte(self):
-            dab_db.supprimer_compte(self.NumCompte)
+            db.supprimer_compte(self.NumCompte)
             self.NumCompte = None
-            self.Solde = 0.00
 
         class Carte:
 
@@ -55,26 +52,26 @@ class Client:
                 self.EtatCarte = etat_carte
 
             def ajouter_carte(self):
-                dab_db.ajouter_carte(self.NumCompte, self.CodeClient, self.NumCarte,
-                                     self.CodeSecret, self.DateExpiration, self.EtatCarte)
+                db.ajouter_carte(self.NumCompte, self.CodeClient, self.NumCarte,
+                                 self.CodeSecret, self.DateExpiration, self.EtatCarte)
 
             def blouquer_carte(self, num_carte):
                 self.NumCarte = num_carte
                 self.EtatCarte = False
-                dab_db.change_etat(self.EtatCarte, self.NumCarte)
+                db.change_etat(self.EtatCarte, self.NumCarte)
 
             def supprimer_carte(self, num_carte):
                 self.NumCarte = num_carte
-                dab_db.supprimer_carte(self.NumCarte)
+                db.supprimer_carte(self.NumCarte)
 
             def deblouquer_cart(self, num_carte):
                 self.NumCarte = num_carte
                 self.EtatCarte = True
-                dab_db.change_etat(self.EtatCarte, self.NumCarte)
+                db.change_etat(self.EtatCarte, self.NumCarte)
 
-            def modifier_code_secret(self, num_carte,  code):
+            def modifier_code_secret(self, num_carte, code):
                 self.NumCarte = num_carte
                 self.CodeSecret = code
-                dab_db.change_code(self.CodeSecret, self.NumCarte)
+                db.change_code(self.NumCarte, self.CodeSecret)
 
 # TODO: public and private
