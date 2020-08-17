@@ -22,7 +22,7 @@ def card():  # =================================================================
                 code_secret = fct.generate_secret_code()
                 date_exp = fct.exp_date()
 
-                cart = cls.Client.Compte.Carte(num_compte, code_client, num_carte, code_secret, date_exp, True)
+                cart = cls.Client.Compte.Carte(num_compte, code_client, num_carte, code_secret, date_exp)
                 cart.ajouter_carte()
             except:
                 account(code_client)
@@ -39,10 +39,10 @@ def card():  # =================================================================
             num_carte = fct.no_card_request()
             num_compte = db.carte_info(num_carte)[0]
             code_client = db.carte_info(num_carte)[1]
-            code_carte = db.carte_info(num_carte)[3]
+            code_secret = db.carte_info(num_carte)[3]
             date_exp = db.carte_info(num_carte)[4]
             etat_carte = db.carte_info(num_carte)[5]
-            cart = cls.Client.Compte.Carte(num_compte, code_client, num_carte, code_carte, date_exp, etat_carte)
+            cart = cls.Client.Compte.Carte(num_compte, code_client, num_carte, code_secret, date_exp, etat_carte)
 
             if choix == "2":  # Supprimer carte ___________________________________________________
                 print(f'\n{" Supprimer une carte " :-^60}')
@@ -74,8 +74,8 @@ def card():  # =================================================================
             elif choix == "5":  # Modifier code ___________________________________________________
                 print(f'\n{" Modifier le code secret " :-^60}')
                 while True:
-                    code_secret = input("-> Le code secret actual: ")
-                    if code_secret != str(code_carte):
+                    secret_code = input("-> Le code secret actual: ")
+                    if secret_code != str(code_secret):
                         print("\t- Le code secret incorrect.\n")
                         continue
                     else:

@@ -40,7 +40,7 @@ def generate_account_number():
         if num_compte in accounts:
             num_compte += 1
             continue
-        return str(num_compte)
+        return str(num_compte).rjust(6, "0")
 
 
 def generate_card_number():

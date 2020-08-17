@@ -120,3 +120,5 @@ def change_etat(etat, num_carte):
 def change_code(num_carte, new_code):
     with cnct:
         cur.execute("UPDATE Carte SET CodeSecret = ? WHERE NumCarte = ?", (new_code, num_carte))
+
+# TODO: ki takhlass la date exp twali la carte invalide (blouquer)

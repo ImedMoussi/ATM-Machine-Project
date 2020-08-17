@@ -13,11 +13,10 @@ from tkinter import *
 
 window: Tk = Tk()
 window.withdraw()
-main: Toplevel = Toplevel(bg='light grey')
-main.geometry('800x500+265+100')
-main.title("Desrtébiteur automatique de billet")
-main.deiconify()
-main.lift()
-main.resizable(0, 0)
-
-main.mainloop()
+# TODO: change BG
+top: Toplevel = Toplevel(bg='cornsilk4')
+top.geometry('600x400+365+125')
+top.title("Programmation Orienté Object (POO) - DM: 06")
+top.deiconify()
+top.lift()
+top.resizable(0, 0)

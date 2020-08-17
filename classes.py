@@ -43,7 +43,7 @@ class Client:
         class Carte:
 
             def __init__(self, num_compte, code_client, num_carte, code_secret,
-                         date_expiration, etat_carte):
+                         date_expiration, etat_carte=True):
                 self.NumCompte = num_compte
                 self.CodeClient = code_client
                 self.NumCarte = num_carte
