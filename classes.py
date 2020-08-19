@@ -15,7 +15,7 @@ class Client:
 
     class Compte:
 
-        def __init__(self, code_client, num_compte=None, solde=0.00):
+        def __init__(self, code_client, num_compte=None, solde=0):
             self.NumCompte = num_compte
             self.CodeClient = code_client
             self.Solde = solde

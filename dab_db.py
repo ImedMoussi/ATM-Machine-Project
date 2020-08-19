@@ -17,7 +17,7 @@ with cnct:
     cur.execute(""" CREATE TABLE IF NOT EXISTS [Compte](
                     [NumCompte] CHAR(10) PRIMARY KEY NOT NULL UNIQUE,
                     [CodeClient] CHAR(10) REFERENCES [Client]([CodeClient]),
-                    [Solde] FLOAT(50, 2) DEFAULT (0.00)); """)
+                    [Solde] FLOAT(50) DEFAULT (0.00)); """)
 
     # La table "Carte":
     cur.execute(""" CREATE TABLE IF NOT EXISTS [Carte](
@@ -30,16 +30,16 @@ with cnct:
 
 try:
     # Remplir la table "Client":
-    clt = read_csv("Clients.csv")
-    clt.to_sql('Client', cnct, if_exists='append', index=False)
+    clts = read_csv("Clients.csv")
+    clts.to_sql('Client', cnct, if_exists='append', index=False)
 
     # Remplir la table "Compte":
-    cnt = read_csv("Comptes.csv")
-    cnt.to_sql('Compte', cnct, if_exists='append', index=False)
+    cnts = read_csv("Comptes.csv")
+    cnts.to_sql('Compte', cnct, if_exists='append', index=False)
 
     # Remplir la table "Carte":
-    crt = read_csv("Cartes.csv")
-    crt.to_sql('Carte', cnct, if_exists='append', index=False)
+    crts = read_csv("Cartes.csv")
+    crts.to_sql('Carte', cnct, if_exists='append', index=False)
 except:
     pass
 

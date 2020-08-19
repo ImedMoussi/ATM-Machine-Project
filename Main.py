@@ -29,7 +29,7 @@ def card():  # =================================================================
             else:
                 print(f'\n{" Ajouter une carte " :-^60}\n'
                       f'- Une carte a été ajoutée au compte -{num_compte}-:\n'
-                      f'\t- Numéro de carte: |{cart.NumCarte}|\n'
+                      f'\t- Numéro de la carte: |{cart.NumCarte}|\n'
                       f'\t- Code secret: |{cart.CodeSecret}|\n'
                       f"\t- Date d'expiration: {cart.DateExpiration}\n"
                       f'{"" :-^60}\n')
@@ -221,18 +221,28 @@ def client():  # ===============================================================
             clnt = cls.Client(code_client, nom_prenom, int(code_agence), tel, email)
             clnt.ajouter_client()
             print(f'{" Opération terminée ":-^60}\n')
-            # Lorsqu'un client est ajouté, un compte est ajouté automatiquement.
+            # Lorsqu'un client est ajouté, un compte et une carte sont automatiquement ajouté.
+            # Compte: ---------------------------------------------------------
             cmpt = clnt.Compte(code_client)
             num_compte = fct.generate_account_number()
             cmpt.ajouter_compte(num_compte)
+            # Carte: ----------------------------------------------------------
+            num_carte = fct.generate_card_number()
+            code_secret = fct.generate_secret_code()
+            date_exp = fct.exp_date()
+            cart = cmpt.Carte(num_compte, code_client, num_carte, code_secret, date_exp)
+            cart.ajouter_carte()
+
             print(f'{"" :-^60}\n'
                   f'- Le compte N°: {num_compte} a été ajouté au client N°: {code_client}.\n'
+                  f'- Numéro de la carte: |{cart.NumCarte}|\n'
+                  f'- Code secret: |{cart.CodeSecret}|\n'
                   f'{"" :-^60}\n')
             client()
 
         elif choix == "2":  # Afficher détails ________________________________________________
-            code = fct.client_code_request()
-            info = db.client_info(code)
+            code_client = fct.client_code_request()
+            info = db.client_info(code_client)
             print(f'\n{" Client Info ":-^60}\n'
                   f'\tCode client: {info[0]}\n'
                   f'\tNom & Prénom: {info[1]}\n'
