@@ -14,7 +14,7 @@ def client_code_request():
         return code
 
 
-def no_card_request():
+def nmbr_card_request():
     num_cartes = [i[2] for i in db.cards()]
     while True:
         num_carte = input("- Le numéro de carte: ")

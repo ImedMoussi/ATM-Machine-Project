@@ -36,14 +36,15 @@ def card():  # =================================================================
             card()
 
         elif choix in ["2", "3", "4", "5"]:
-            num_carte = fct.no_card_request()
-            num_compte = db.carte_info(num_carte)[0]
-            code_client = db.carte_info(num_carte)[1]
-            code_secret = db.carte_info(num_carte)[3]
-            date_exp = db.carte_info(num_carte)[4]
-            etat_carte = db.carte_info(num_carte)[5]
-            cart = cls.Client.Compte.Carte(num_compte, code_client, num_carte, code_secret, date_exp, etat_carte)
+            num_carte = fct.nmbr_card_request()
+            info = db.carte_info(num_carte)
+            num_compte = info[0]
+            code_client = info[1]
+            code_secret = info[3]
+            date_exp = info[4]
+            etat_carte = info[5]
 
+            cart = cls.Client.Compte.Carte(num_compte, code_client, num_carte, code_secret, date_exp, etat_carte)
             if choix == "2":  # Supprimer carte ___________________________________________________
                 print(f'\n{" Supprimer une carte " :-^60}')
                 cart.supprimer_carte(num_carte)
@@ -102,7 +103,7 @@ def account(code_client):  # ===================================================
         solde = db.compte_info(code_client)[2]
     except:
         num_compte = None
-        solde = 0.00
+        solde = 0
 
     cmpt = cls.Client.Compte(code_client, num_compte, solde)
     while True:
@@ -264,7 +265,7 @@ def start():
           "\t3. Carte\n"
           "\t4. Quitter\n")
     while True:
-        choix = input("->\tChoisissez l'option: ")
+        choix = input("-> Choisissez l'option: ")
         if choix == "1":
             print(f'{" Client ":=^70}\n')
             client()

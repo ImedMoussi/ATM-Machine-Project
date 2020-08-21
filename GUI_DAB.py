@@ -11,12 +11,9 @@ from tkinter import *
 
 # MAIN_Window___________________________________________________________
 
-window: Tk = Tk()
-window.withdraw()
-# TODO: change BG
-top: Toplevel = Toplevel(bg='cornsilk4')
-top.geometry('600x400+365+125')
-top.title("Programmation Orienté Object (POO) - DM: 06")
-top.deiconify()
-top.lift()
-top.resizable(0, 0)
+start: Tk = Tk()
+start.geometry('600x400+365+125')
+start.title("Programmation Orienté Object (POO) - DM: 06")
+start.deiconify()
+start.lift()
+start.resizable(0, 0)
