@@ -1,6 +1,7 @@
 import sqlite3
 from pandas import read_csv
 
+
 cnct = sqlite3.connect('DAB_BDD.db')
 cur = cnct.cursor()
 
@@ -30,15 +31,15 @@ with cnct:
 
 try:
     # Remplir la table "Client":
-    clts = read_csv("Clients.csv")
+    clts = read_csv(r"CSV\Clients.csv")
     clts.to_sql('Client', cnct, if_exists='append', index=False)
 
     # Remplir la table "Compte":
-    cnts = read_csv("Comptes.csv")
+    cnts = read_csv(r"CSV\Comptes.csv")
     cnts.to_sql('Compte', cnct, if_exists='append', index=False)
 
     # Remplir la table "Carte":
-    crts = read_csv("Cartes.csv")
+    crts = read_csv(r"CSV\Cartes.csv")
     crts.to_sql('Carte', cnct, if_exists='append', index=False)
 except:
     pass

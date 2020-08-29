@@ -154,7 +154,7 @@ def account(code_client):  # ===================================================
                       f'\n{"" :-^60}')
 
             elif choix == "4":  # Supprimer _______________________________________________________
-                print(f'\n{"Supprimer le compte" :-^60}'
+                print(f'\n{" Supprimer le compte" :-^60}'
                       f'\n- Le compte N°: {cmpt.NumCompte} de -{client_name}- a été supprimé.'
                       f'\n{" Opération réussie " :-^60}')
                 cmpt.supprimer_compte()
@@ -176,7 +176,7 @@ def account(code_client):  # ===================================================
                 print(f'\n{"" :-^60}'
                       f'\n- Le compte N°: {num_compte} a été ajouté au client: -{client_name}-.'
                       f'\n{"" :-^60}')
-                account(code_client)
+                start()
 
             elif choix == "2":  # Menu principal __________________________________________________
                 print(f'\n{"":=^70}')
