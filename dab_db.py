@@ -18,7 +18,7 @@ with cnct:
     cur.execute(""" CREATE TABLE IF NOT EXISTS [Compte](
                     [NumCompte] CHAR(10) PRIMARY KEY NOT NULL UNIQUE,
                     [CodeClient] CHAR(10) REFERENCES [Client]([CodeClient]),
-                    [Solde] FLOAT(50) DEFAULT (0.00)); """)
+                    [Solde] FLOAT(50,2) DEFAULT (0.00)); """)
 
     # La table "Carte":
     cur.execute(""" CREATE TABLE IF NOT EXISTS [Carte](
@@ -46,80 +46,80 @@ except:
 
 
 def clients():
-    clnts = cur.execute("SELECT * from Client")
+    clnts = cur.execute("SELECT * from Client;")
     return clnts.fetchall()
 
 
 def accounts():
-    accts = cur.execute("SELECT * FROM Compte")
+    accts = cur.execute("SELECT * FROM Compte;")
     return accts.fetchall()
 
 
 def cards():
-    carts = cur.execute("SELECT * FROM Carte")
+    carts = cur.execute("SELECT * FROM Carte;")
     return carts.fetchall()
 
 
 def client_info(code_client):
-    clnt_info = cur.execute("SELECT * FROM Client WHERE CodeClient = ?", (code_client,))
+    clnt_info = cur.execute("SELECT * FROM Client WHERE CodeClient = ?;", (code_client,))
     return clnt_info.fetchone()
 
 
 def compte_info(code_client):
-    cmpt_info = cur.execute("SELECT * FROM Compte WHERE CodeClient = ?", (code_client,))
+    cmpt_info = cur.execute("SELECT * FROM Compte WHERE CodeClient = ?;", (code_client,))
     return cmpt_info.fetchone()
 
 
 def carte_info(num_carte):
-    cart_info = cur.execute("SELECT * FROM Carte WHERE NumCarte = ?", (num_carte,))
+    cart_info = cur.execute("SELECT * FROM Carte WHERE NumCarte = ?;", (num_carte,))
     return cart_info.fetchone()
 
 
 def ajouter_client(code_client, nom_prenom, code_agence, tel, email):
     with cnct:
-        cur.execute("INSERT INTO Client VALUES (?, ?, ?, ?, ?)",
+        cur.execute("INSERT INTO Client VALUES (?, ?, ?, ?, ?);",
                     (code_client, nom_prenom, code_agence, tel, email))
 
 
 def ajouter_compte(num_compte, code_client, solde):
     with cnct:
-        cur.execute("INSERT INTO Compte VALUES (?, ?, ?)", (num_compte, code_client, solde))
+        cur.execute("INSERT INTO Compte VALUES (?, ?, ?);", (num_compte, code_client, solde))
 
 
 def supprimer_compte(num_compte):
     with cnct:
-        cur.execute("DELETE FROM Compte WHERE NumCompte = ?", (num_compte,))
-        cur.execute("DELETE FROM Carte WHERE NumCompte = ?", (num_compte,))
+        cur.execute("DELETE FROM Compte WHERE NumCompte = ?;", (num_compte,))
+        cur.execute("DELETE FROM Carte WHERE NumCompte = ?;", (num_compte,))
 
 
 def retirer(num_compte, montant):
     with cnct:
-        cur.execute("UPDATE Compte SET Solde = Solde - ? WHERE NumCompte = ?", (montant, num_compte))
+        cur.execute("UPDATE Compte SET Solde = Solde - ? WHERE NumCompte = ?;", (montant, num_compte))
 
 
 def deposer(num_compte, montant):
     with cnct:
-        cur.execute("UPDATE Compte SET Solde = Solde + ? WHERE NumCompte = ?", (montant, num_compte))
+        cur.execute("UPDATE Compte SET Solde = Solde + ? WHERE NumCompte = ?;", (montant, num_compte))
 
 
 def ajouter_carte(num_compte, code_client, num_carte, code_secret, date_exp, etat):
     with cnct:
-        cur.execute("INSERT INTO Carte VALUES (?, ?, ?, ?, ?, ?)",
+        cur.execute("INSERT INTO Carte VALUES (?, ?, ?, ?, ?, ?);",
                     (num_compte, code_client, num_carte, code_secret, date_exp, etat))
 
 
 def supprimer_carte(num_carte):
     with cnct:
-        cur.execute("DELETE FROM Carte WHERE NumCarte = ?", (num_carte,))
+        cur.execute("DELETE FROM Carte WHERE NumCarte = ?;", (num_carte,))
 
 
 def change_etat(etat, num_carte):
     with cnct:
-        cur.execute("UPDATE Carte SET EtatCarte = ? WHERE NumCarte = ?", (etat, num_carte))
+        cur.execute("UPDATE Carte SET EtatCarte = ? WHERE NumCarte = ?;", (etat, num_carte))
 
 
 def change_code(num_carte, new_code):
     with cnct:
-        cur.execute("UPDATE Carte SET CodeSecret = ? WHERE NumCarte = ?", (new_code, num_carte))
+        cur.execute("UPDATE Carte SET CodeSecret = ? WHERE NumCarte = ?;", (new_code, num_carte))
 
 # TODO: ki takhlass la date exp twali la carte invalide (blouquer)
