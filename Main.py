@@ -24,7 +24,7 @@ def card():  # =================================================================
 
                 cart = cls.Client.Compte.Carte(num_compte, code_client, num_carte, code_secret, date_exp)
                 cart.ajouter_carte()
-            except:
+            except:  # Le client n'a pas un compte
                 account(code_client)
             else:
                 print(f'\n{" Ajouter une carte " :-^60}\n'
@@ -37,12 +37,12 @@ def card():  # =================================================================
 
         elif choix in ["2", "3", "4", "5"]:
             num_carte = fct.nmbr_card_request()
-            info = db.carte_info(num_carte)
-            num_compte = info[0]
-            code_client = info[1]
-            code_secret = info[3]
-            date_exp = info[4]
-            etat_carte = info[5]
+            card_info = db.carte_info(num_carte)
+            num_compte = card_info[0]
+            code_client = card_info[1]
+            code_secret = card_info[3]
+            date_exp = card_info[4]
+            etat_carte = card_info[5]
 
             cart = cls.Client.Compte.Carte(num_compte, code_client, num_carte, code_secret, date_exp, etat_carte)
             if choix == "2":  # Supprimer carte ___________________________________________________
@@ -53,22 +53,22 @@ def card():  # =================================================================
                 card()
 
             elif choix == "3":  # Blouquer carte __________________________________________________
-                print(f'\n{" Blouquer une carte " :-^60}')
+                print(f'\n{" Bloquer une carte " :-^60}')
                 if not cart.EtatCarte:
-                    print(f'\t- La carte est déjà blouqer\n{"" :-^60}')
+                    print(f'\t- La carte est déjà bloqué\n{"" :-^60}')
                 else:
                     cart.blouquer_carte(num_carte)
-                    print(f'\t- La carte a été blouquer\n'
+                    print(f'\t- La carte a été bloquée\n'
                           f'{" Opération réussie " :-^60}\n')
                 card()
 
             elif choix == "4":  # Déblouquer carte ________________________________________________
-                print(f'\n{" Déblouquer une carte " :-^60}')
+                print(f'\n{" Débloquer une carte " :-^60}')
                 if cart.EtatCarte:
-                    print(f'\t- La carte est déjà déblouqer\n{"" :-^60}\n')
+                    print(f'\t- La carte est déjà débloqué\n{"" :-^60}\n')
                 else:
                     cart.deblouquer_cart(num_carte)
-                    print(f'\t- La carte a été déblouquer\n'
+                    print(f'\t- La carte a été débloquée\n'
                           f'{" Opération réussie " :-^60}\n')
                 card()
 
@@ -241,15 +241,15 @@ def client():  # ===============================================================
                   f'{"" :-^60}\n')
             client()
 
-        elif choix == "2":  # Afficher détails ________________________________________________
+        elif choix == "2":  # Afficher détails ____________________________________________________
             code_client = fct.client_code_request()
-            info = db.client_info(code_client)
+            client_info = db.client_info(code_client)
             print(f'\n{" Client Info ":-^60}\n'
-                  f'\tCode client: {info[0]}\n'
-                  f'\tNom & Prénom: {info[1]}\n'
-                  f'\tCode agence: {info[2]}\n'
-                  f'\tTelephone: {info[3]}\n'
-                  f'\tEmail: {info[4]}\n'
+                  f'\tCode client: {client_info[0]}\n'
+                  f'\tNom & Prénom: {client_info[1]}\n'
+                  f'\tCode agence: {client_info[2]}\n'
+                  f'\tTelephone: {client_info[3]}\n'
+                  f'\tEmail: {client_info[4]}\n'
                   f'{"":-^60}\n')
             client()
 
@@ -282,7 +282,7 @@ def start():
 
 
 if __name__ == '__main__':
-    print(f'{" BIENVENUE ":*^80}')
+    print(f'\n{" BIENVENUE ":*^80}')
     start()
 
 # sinarko

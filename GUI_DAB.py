@@ -106,7 +106,6 @@ def enter_code(card_info):
             db.change_etat(False, num_card)
 
     else:  # Cas favorable
-        count = 0
         Nom_prenom.set(db.client_info(card_info[1])[1])
         code_clt.set(card_info[1])
         no_carte.set(num_card)
@@ -120,6 +119,7 @@ def enter_code(card_info):
         ecran.delete(0.0, END)
         ecran.insert(INSERT, '\n Taper le montant :')
         code_entry.place_forget()
+        count = 0
         montant = ''
         amount.set(montant)
         amount_entry.place(x=110, y=85)
@@ -310,29 +310,24 @@ amount_entry = Entry(first_frame, bg='pale green',
 # Images _______________________________________________________________________
 carte_png = PhotoImage(file=r'Images\carte.png')
 carte_pic = Label(second_frame, bg='gray20', justify=CENTER,
-                  image=carte_png,
-                  compound=CENTER)
+                  image=carte_png, compound=CENTER)
 carte_pic.pack()
 
 avale_png = PhotoImage(file=r'Images\avalé.png')
 avale_pic = Label(second_frame, bg='gray20', justify=CENTER,
-                  image=avale_png,
-                  compound=CENTER)
+                  image=avale_png, compound=CENTER)
 
 code_png = PhotoImage(file=r'Images\code.png')
 code_pic = Label(second_frame, bg='gray20', justify=CENTER,
-                 image=code_png,
-                 compound=CENTER)
+                 image=code_png, compound=CENTER)
 
 money_png = PhotoImage(file=r'Images\money.png')
 money_pic = Label(second_frame, bg='gray20', justify=CENTER,
-                  image=money_png,
-                  compound=CENTER)
+                  image=money_png, compound=CENTER)
 
 merci_png = PhotoImage(file=r'Images\merci.png')
 merci_pic = Label(second_frame, bg='gray20', justify=CENTER,
-                  image=merci_png,
-                  compound=CENTER)
+                  image=merci_png, compound=CENTER)
 
 
 # Buttons _____________________________________________________________________
