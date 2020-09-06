@@ -54,7 +54,7 @@ def enter_card():
     num_carte = card_num.get()
     num_cartes = [i[2] for i in db.cards()]
     if not num_carte:
-        ecran.insert(INSERT, '\n\n\n Tapez le numéro SVP.')
+        ecran.insert(INSERT, '\n\n\n Tapez un numéro SVP.')
     elif num_carte not in num_cartes:
         ecran.insert(INSERT, '\n\n\n Incorrecte numéro carte.')
     elif num_carte in num_cartes:
@@ -217,7 +217,7 @@ def cancel():
     clear()
     ecran.configure(state=NORMAL)
     ecran.delete(0.0, END)
-    ecran.insert(INSERT, '\n Entrer votre numéro de carte :')
+    ecran.insert(INSERT, '\n Entrez votre numéro de carte :')
     ecran.configure(state=DISABLED)
     code_pic.pack_forget()
     avale_pic.pack_forget()
@@ -271,7 +271,6 @@ second_frame.pack(side='left', ipadx=20)
 info_frame = Frame(main, height=450, width=360,
                    bg='gray20',
                    relief=SUNKEN)
-# info_frame.pack(side='left', ipadx=20)
 
 # Date ________________________________________________________________________
 date = Label(first_frame,
