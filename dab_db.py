@@ -35,11 +35,11 @@ try:
     clts.to_sql('Client', cnct, if_exists='append', index=False)
 
     # Remplir la table "Compte":
-    cnts = read_csv(r"CSV\Comptes.csv")
+    cnts = read_csv(r"CSV\Comptes.csv", dtype={'NumCompte': 'str'})
     cnts.to_sql('Compte', cnct, if_exists='append', index=False)
 
     # Remplir la table "Carte":
-    crts = read_csv(r"CSV\Cartes.csv")
+    crts = read_csv(r"CSV\Cartes.csv", dtype={'NumCompte': 'str', 'NumCarte': 'str'})
     crts.to_sql('Carte', cnct, if_exists='append', index=False)
 except:
     pass

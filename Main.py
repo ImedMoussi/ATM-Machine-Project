@@ -24,7 +24,7 @@ def card():  # =================================================================
 
                 cart = cls.Client.Compte.Carte(num_compte, code_client, num_carte, code_secret, date_exp)
                 cart.ajouter_carte()
-            except:  # Le client n'a pas un compte
+            except:  # C'est le client n'a pas un compte
                 account(code_client)
             else:
                 print(f'\n{" Ajouter une carte " :-^60}\n'
@@ -36,7 +36,7 @@ def card():  # =================================================================
             card()
 
         elif choix in ["2", "3", "4", "5"]:
-            num_carte = fct.nmbr_card_request()
+            num_carte = fct.num_card_request()
             card_info = db.carte_info(num_carte)
             num_compte = card_info[0]
             code_client = card_info[1]
@@ -122,15 +122,15 @@ def account(code_client):  # ===================================================
                     try:
                         montant = float(input("- Montant: "))
                     except ValueError:
-                        print("\t- Vous devez taper un montant.")
+                        print("\t- Tapez un montant SVP.")
                         continue
-                    if montant <= cmpt.consulter_solde():
+                    if montant > cmpt.consulter_solde():
+                        print('\t-> Le montant est supérieur au solde.\n'
+                              f'{" Opération échouée " :-^60}')
+                    else:
                         cmpt.debiter(montant)
                         print(f'\t-> Le solde maintenant est: {cmpt.Solde:.2f} £\n'
                               f'{" Opération réussie " :-^60}')
-                    else:
-                        print('\t-> Le montant est supérieur au solde.\n'
-                              f'{" Opération échouée " :-^60}')
                     break
 
             elif choix == "2":  # Déposer _________________________________________________________
@@ -139,7 +139,7 @@ def account(code_client):  # ===================================================
                     try:
                         montant = float(input("- Montant: "))
                     except ValueError:
-                        print("\t- Vous devez taper un montant.")
+                        print("\t- Tapez un montant SVP.")
                         continue
                     else:
                         cmpt.crediter(montant)
@@ -190,17 +190,17 @@ def client():  # ===============================================================
     while True:
         choix = input("-> Choisissez l'option: ")
 
-        if choix == "1":  # Ajouter client _____________________________________________________
+        if choix == "1":  # Ajouter client ________________________________________________________
             print(f'\n{" Ajouter un client ":-^60}')
             code_client = fct.generate_client_code()
-
             while True:  # Nom & Prénom -------------------------------------------------
                 nom_prenom = input("- Nom et Prénom: ")
                 names = [i[1] for i in db.clients()]
-                if re.search(r'^\d*$', nom_prenom):
+                if re.search(r'^\d*$', nom_prenom) or nom_prenom.isspace():
                     continue
                 elif nom_prenom in names:
-                    print(f"\t- Le client -{nom_prenom}- déja existé.\n")
+                    print(f"\t- Le client -{nom_prenom}- déja existé."
+                          f'\n{"":-^60}\n')
                     client()
                 break
             while True:  # Code d'agence ------------------------------------------------
@@ -214,7 +214,7 @@ def client():  # ===============================================================
                     continue
                 break
             while True:  # Email --------------------------------------------------------
-                email = input("- Email (..@..): ")
+                email = input("- Email: ")
                 if not re.search(r'\S+@\S+', email):
                     continue
                 break
@@ -223,11 +223,11 @@ def client():  # ===============================================================
             clnt.ajouter_client()
             print(f'{" Opération terminée ":-^60}\n')
             # Lorsqu'un client est ajouté, un compte et une carte sont automatiquement ajouté.
-            # Compte: ---------------------------------------------------------
+            # Compte: -------------------------------------
             cmpt = clnt.Compte(code_client)
             num_compte = fct.generate_account_number()
             cmpt.ajouter_compte(num_compte)
-            # Carte: ----------------------------------------------------------
+            # Carte: --------------------------------------
             num_carte = fct.generate_card_number()
             code_secret = fct.generate_secret_code()
             date_exp = fct.exp_date()
@@ -284,5 +284,3 @@ def start():
 if __name__ == '__main__':
     print(f'\n{" BIENVENUE ":*^80}')
     start()
-
-# sinarko

@@ -39,6 +39,7 @@ class Client:
         def supprimer_compte(self):
             db.supprimer_compte(self.NumCompte)
             self.NumCompte = None
+            self.Solde = 0
 
         class Carte:
 

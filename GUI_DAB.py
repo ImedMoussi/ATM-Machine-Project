@@ -342,7 +342,6 @@ def num_btn(text, cmd, stt=NORMAL):
                   relief=GROOVE)
 
 
-# TODO : bint those buttons to keyboard numbers
 vide1 = num_btn('  ', None, DISABLED).place(x=40, y=380)
 vide2 = num_btn('  ', None, DISABLED).place(x=180, y=380)
 _0_ = num_btn('0', lambda: press_btn(0)).place(x=110, y=380)

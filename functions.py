@@ -4,7 +4,7 @@ import numpy as np
 
 
 def client_code_request():
-    """This function return a client name before it check the name already exist in my bdd or not"""
+    """This function return a client code before it check if the code already exist in my sata bse or not"""
     codes = [i[0] for i in db.clients()]
     while True:
         code = input("- Donner le code client: ")
@@ -14,7 +14,7 @@ def client_code_request():
         return code
 
 
-def nmbr_card_request():
+def num_card_request():
     num_cartes = [i[2] for i in db.cards()]
     while True:
         num_carte = input("- Le numéro de carte: ")
@@ -66,7 +66,6 @@ def generate_secret_code():
 
 
 def exp_date():
-    year = datetime.now().year + 4
-    month = datetime.now().month
-    day = datetime.now().day
-    return datetime(year, month, day).date()
+    dt = datetime.now()
+    dt = dt.replace(day=dt.day - 1, year=dt.year + 4)
+    return dt.date()
