@@ -97,10 +97,10 @@ def card():  # =================================================================
 
 def account(code_client):  # ===============================================================================
     client_name = db.client_info(code_client)[1]
-    try:
+    try:  # Le client a un compte
         num_compte = db.compte_info(code_client)[0]
         solde = db.compte_info(code_client)[2]
-    except:
+    except:  # Le client n'a pas un compte
         num_compte = None
         solde = 0
 
@@ -184,7 +184,7 @@ def account(code_client):  # ===================================================
 
 def client():  # ============================================================================================
     print("\t1. Ajouter un client\n"
-          "\t2. Afficher les détails d'un client\n"
+          "\t2. Afficher les informations d'un client\n"
           "\t3. Menu principal\n")
     while True:
         choix = input("-> Choisissez l'option: ")

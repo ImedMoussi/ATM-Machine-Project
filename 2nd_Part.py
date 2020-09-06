@@ -12,6 +12,7 @@ count = 0
 
 
 def press_btn(num):
+    """When button clicked"""
     global num_carte, code_secret, montant
     length_card = len(card_num_entry.get())
     if length_card in [3, 8, 13]:
@@ -37,8 +38,8 @@ def press_btn(num):
     amount_entry.icursor(len(montant))
 
 
-# Entry accept just numbers
 def validate(value):
+    """Entry accept just numbers"""
     if str.isdigit(value) or value == "":
         return True
     else:
@@ -46,6 +47,7 @@ def validate(value):
 
 
 def enter_card():
+    """verification card number"""
     global num_carte, code_secret
     ecran.configure(state=NORMAL)
     ecran.delete(3.0, END)
@@ -82,6 +84,7 @@ def enter_card():
 
 
 def enter_code(card_info):
+    """Verification code PIN"""
     global num_carte, code_secret, montant, count
     ecran.configure(state=NORMAL)
     ecran.delete(3.0, END)
@@ -129,6 +132,7 @@ def enter_code(card_info):
 
 
 def enter_money(num_compte, solde_actual):
+    """Verification amount"""
     global num_carte, code_secret, montant
     ecran.configure(state=NORMAL)
     ecran.delete(3.0, END)
@@ -156,6 +160,7 @@ def enter_money(num_compte, solde_actual):
 
 
 def sleep():
+    """sleep for 2500s then show another frame"""
     amount_entry.place_forget()
     money_pic.pack_forget()
     merci_pic.pack()
@@ -168,6 +173,7 @@ def sleep():
 
 
 def delete():
+    """Delete just one number"""
     global num_carte, code_secret, montant
     length_card = len(card_num_entry.get())
     if length_card in [5, 10, 15]:
@@ -185,6 +191,7 @@ def delete():
 
 
 def clear():
+    """Clear all the entry"""
     global num_carte, code_secret, montant
     num_carte = ''
     card_num.set(num_carte)
@@ -204,6 +211,7 @@ def clear():
 
 
 def cancel():
+    """Return to the initial state of GUI"""
     global count
     count = 0
     clear()
