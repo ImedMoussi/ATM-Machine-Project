@@ -1,4 +1,4 @@
-from __MiniProjet import dab_db as db
+from __MiniProjet import data_base as db
 
 
 class Client:
@@ -56,7 +56,7 @@ class Client:
                 db.ajouter_carte(self.NumCompte, self.CodeClient, self.NumCarte,
                                  self.CodeSecret, self.DateExpiration, self.EtatCarte)
 
-            def blouquer_carte(self, num_carte):
+            def bloquer_carte(self, num_carte):
                 self.NumCarte = num_carte
                 self.EtatCarte = False
                 db.change_etat(self.EtatCarte, self.NumCarte)
@@ -65,7 +65,7 @@ class Client:
                 self.NumCarte = num_carte
                 db.supprimer_carte(self.NumCarte)
 
-            def deblouquer_cart(self, num_carte):
+            def debloquer_cart(self, num_carte):
                 self.NumCarte = num_carte
                 self.EtatCarte = True
                 db.change_etat(self.EtatCarte, self.NumCarte)
@@ -75,4 +75,4 @@ class Client:
                 self.CodeSecret = code
                 db.change_code(self.NumCarte, self.CodeSecret)
 
-# TODO: public and private
+# TODO: public & private
