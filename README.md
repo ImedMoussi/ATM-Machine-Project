@@ -39,13 +39,13 @@ Code Client | Nom & Prénom | N° Compte | Solde | N° Carte | Code PIN | Etat C
 5. **2nd_part** Le programme de l'interface graphique.
 
 #### Les Modules utilisés:
-~~~~{.python}
+```python
 import sqlite3
 from pandas import read_csv
 import re  # Regular Expression
 from datetime import datetime
 import numpy
-~~~~
+```
 
 #### Partie 1:
 Via le console:
