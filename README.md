@@ -6,7 +6,7 @@ Distributeur Automatique de Billets (DAB)
 ## Instructions pour l’exécution du programme:
 - [Télécharger](https://www.python.org/downloads/) et installer python 3.x 
 - Télécharger et installer un IDE (Pycharm, VS Code, Sublime Text, Atom ...) .
-- Télécharger puis déziper le `Mini_Projet.zip`.
+- Télécharger puis déziper le `ATM-Machine-Project.zip`.
 - Pour le code de dévloppeur (Back-End), ouvrez le fichier `1st_part.py`.
 - Pour l'interface graphique (Front_end), ouvrez le fichier `2nd_part.py`.
 
